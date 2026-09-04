@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block titulo %}Clientes{% endblock %}
+{% block conteudo %}
+<h1>Cadastro de Cliente</h1>
+
+<form class="formulario" method="POST" action="{{ url_for('cadastrar_cliente') }}">
+    <div class="campo">
+        <label for="nome">Nome *</label>
+        <input type="text" id="nome" name="nome" required>
+    </div>
+    <div class="campo">
+        <label for="telefone">Telefone *</label>
+        <input type="text" id="telefone" name="telefone" required>
+    </div>
+    <div class="campo">
+        <label for="email">E-mail</label>
+        <input type="email" id="email" name="email">
+    </div>
+    <div class="campo">
+        <label for="endereco">Endereço</label>
+        <input type="text" id="endereco" name="endereco">
+    </div>
+    <button type="submit">Cadastrar cliente</button>
+</form>
+
+<h2>Clientes cadastrados</h2>
+{% if clientes %}
+<table class="tabela">
+    <thead>
+        <tr><th>Nome</th><th>Telefone</th><th>E-mail</th><th>Endereço</th></tr>
+    </thead>
+    <tbody>
+        {% for c in clientes %}
+        <tr>
+            <td>{{ c.nome }}</td>
+            <td>{{ c.telefone }}</td>
+            <td>{{ c.email or "-" }}</td>
+            <td>{{ c.endereco or "-" }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p class="vazio">Nenhum cliente cadastrado ainda.</p>
+{% endif %}
+{% endblock %}

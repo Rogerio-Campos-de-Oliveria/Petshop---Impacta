@@ -13,7 +13,7 @@ def index():
 def listar_clientes():
     termo = request.args.get("q", "").strip()
 
-    cconn = get_connection()
+    conn = get_connection()
     cursor = conn.cursor(dictionary=True)
     if termo:
         like = f"%{termo}%"

@@ -24,10 +24,16 @@
 </form>
 
 <h2>Clientes cadastrados</h2>
+
+<form class="barra-pesquisa" method="GET" action="{{ url_for('listar_clientes') }}">
+    <input type="text" name="q" placeholder="Pesquisar por nome, telefone ou e-mail..." value="{{ termo or '' }}">
+    <button type="submit">Pesquisar</button>
+</form>
+
 {% if clientes %}
 <table class="tabela">
     <thead>
-        <tr><th>Nome</th><th>Telefone</th><th>E-mail</th><th>Endereço</th></tr>
+        <tr><th>Nome</th><th>Telefone</th><th>E-mail</th><th>Endereço</th><th>Ações</th></tr>
     </thead>
     <tbody>
         {% for c in clientes %}
@@ -36,11 +42,21 @@
             <td>{{ c.telefone }}</td>
             <td>{{ c.email or "-" }}</td>
             <td>{{ c.endereco or "-" }}</td>
+            <td class="acoes">
+                <a class="btn-editar" href="{{ url_for('editar_cliente_form', cliente_id=c.id) }}">Editar</a>
+                <form method="POST" action="{{ url_for('excluir_cliente', cliente_id=c.id) }}"
+                      onsubmit="return confirm('Tem certeza que deseja excluir este cliente?');">
+                    <button type="submit" class="btn-excluir">Excluir</button>
+                </form>
+            </td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
 {% else %}
-<p class="vazio">Nenhum cliente cadastrado ainda.</p>
+<p class="vazio">
+    {% if termo %}Nenhum cliente encontrado para "{{ termo }}".{% else %}Nenhum cliente cadastrado ainda.{% endif %}
+</p>
 {% endif %}
 {% endblock %}
+

@@ -1,8 +1,7 @@
 import mysql.connector
 import os
 
-# Dados de conexão - ajuste conforme seu MySQL local, ou defina
-# as variáveis de ambiente DB_HOST, DB_USER, DB_PASSWORD, DB_NAME.
+
 DB_CONFIG = {
     "host": os.environ.get("DB_HOST", "localhost"),
     "port": int(os.environ.get("DB_PORT", 3306)),
@@ -23,7 +22,6 @@ def _get_connection_sem_banco():
 
 
 def init_db():
-    # cria o banco de dados "petcare" caso ainda não exista
     conn = _get_connection_sem_banco()
     cursor = conn.cursor()
     cursor.execute(f"CREATE DATABASE IF NOT EXISTS {DB_CONFIG['database']}")

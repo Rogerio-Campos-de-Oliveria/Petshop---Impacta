@@ -33,7 +33,7 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV /home/rcolinux/Documentos/AC1/Petshop---Impacta/venv
+set -gx VIRTUAL_ENV /home/rcolinux/Documentos/Petshop---Impacta/venv
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/"bin $PATH

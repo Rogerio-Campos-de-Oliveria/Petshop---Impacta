@@ -49,6 +49,51 @@ def cadastrar_cliente():
     conn.close()
     return redirect(url_for("listar_clientes"))
 
+@app.route("/clientes/<int:cliente_id>/editar", methods=["GET"])
+def editar_cliente_form(cliente_id):
+    conn = get_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM clientes WHERE id = %s", (cliente_id,))
+    cliente = cursor.fetchone()
+    cursor.close()
+    conn.close()
+
+    if cliente is None:
+        return redirect(url_for("listar_clientes"))
+
+    return render_template("editar_cliente.html", cliente=cliente)
+
+
+@app.route("/clientes/<int:cliente_id>/editar", methods=["POST"])
+def editar_cliente(cliente_id):
+    nome = request.form["nome"]
+    telefone = request.form["telefone"]
+    email = request.form.get("email")
+    endereco = request.form.get("endereco")
+
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute(
+        """UPDATE clientes
+           SET nome = %s, telefone = %s, email = %s, endereco = %s
+           WHERE id = %s""",
+        (nome, telefone, email, endereco, cliente_id),
+    )
+    conn.commit()
+    cursor.close()
+    conn.close()
+    return redirect(url_for("listar_clientes"))
+
+
+@app.route("/clientes/<int:cliente_id>/excluir", methods=["POST"])
+def excluir_cliente(cliente_id):
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute("DELETE FROM clientes WHERE id = %s", (cliente_id,))
+    conn.commit()
+    cursor.close()
+    conn.close()
+    return redirect(url_for("listar_clientes"))
 
 if __name__ == "__main__":
     init_db()

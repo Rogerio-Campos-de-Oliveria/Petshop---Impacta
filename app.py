@@ -11,13 +11,24 @@ def index():
 
 @app.route("/clientes", methods=["GET"])
 def listar_clientes():
-    conn = get_connection()
+    termo = request.args.get("q", "").strip()
+
+    cconn = get_connection()
     cursor = conn.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM clientes ORDER BY id DESC")
+    if termo:
+        like = f"%{termo}%"
+        cursor.execute(
+            """SELECT * FROM clientes
+               WHERE nome LIKE %s OR telefone LIKE %s OR email LIKE %s
+               ORDER BY id DESC""",
+            (like, like, like),
+        )
+    else:
+        cursor.execute("SELECT * FROM clientes ORDER BY id DESC")
     clientes = cursor.fetchall()
     cursor.close()
     conn.close()
-    return render_template("clientes.html", clientes=clientes)
+    return render_template("clientes.html", clientes=clientes, termo=termo)
 
 
 @app.route("/clientes/novo", methods=["POST"])

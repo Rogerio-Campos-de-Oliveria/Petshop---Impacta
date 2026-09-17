@@ -125,7 +125,7 @@ h1 { color: var(--azul-petroleo); }
 }
 
 .tabela th, .tabela td {
-    padding: 12px 13px;
+    padding: 10px 12px;
     border-bottom: 1px solid var(--borda);
     text-align: left;
     font-size: 0.92rem;
@@ -148,3 +148,41 @@ h1 { color: var(--azul-petroleo); }
 }
 
 .acoes { display: flex; gap: 8px; }
+
+.acoes a, .acoes button {
+    font-size: 0.82rem;
+    padding: 4px 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-editar { background: var(--verde-agua); color: white; }
+.btn-editar:hover { background: var(--azul-petroleo); }
+
+.btn-excluir { background: var(--coral); color: white; }
+.btn-excluir:hover { background: #d95a3a; }
+
+.barra-pesquisa {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.barra-pesquisa input {
+    flex: 1;
+    padding: 8px 10px;
+    border: 1px solid var(--borda);
+    border-radius: 6px;
+    font-size: 0.95rem;
+}
+
+.barra-pesquisa button {
+    background: var(--azul-petroleo);
+    color: white;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+}

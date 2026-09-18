@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block titulo %}Pets{% endblock %}
+{% block conteudo %}
+<h1>Cadastro de Pet</h1>
+
+{% if not clientes %}
+<div class="aviso">Cadastre um cliente primeiro para poder vincular o pet a um tutor.</div>
+{% endif %}

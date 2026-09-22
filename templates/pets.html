@@ -6,3 +6,34 @@
 {% if not clientes %}
 <div class="aviso">Cadastre um cliente primeiro para poder vincular o pet a um tutor.</div>
 {% endif %}
+
+<form class="formulario" method="POST" action="{{ url_for('cadastrar_pet') }}">
+    <div class="campo">
+        <label for="nome">Nome do pet *</label>
+        <input type="text" id="nome" name="nome" required>
+    </div>
+    <div class="campo">
+        <label for="especie">Espécie *</label>
+        <input type="text" id="especie" name="especie" placeholder="Cão, Gato..." required>
+    </div>
+    <div class="campo">
+        <label for="raca">Raça</label>
+        <input type="text" id="raca" name="raca">
+    </div>
+    <div class="campo">
+        <label for="idade">Idade</label>
+        <input type="number" id="idade" name="idade" min="0">
+    </div>
+    <div class="campo">
+        <label for="cliente_id">Tutor *</label>
+        <select id="cliente_id" name="cliente_id" required>
+            <option value="" disabled selected>Selecione o tutor</option>
+            {% for c in clientes %}
+            <option value="{{ c.id }}">{{ c.nome }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <button type="submit" {% if not clientes %}disabled{% endif %}>Cadastrar pet</button>
+</form>
+
+<h2>Pets cadastrados</h2>

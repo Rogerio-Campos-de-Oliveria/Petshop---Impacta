@@ -95,6 +95,39 @@ def excluir_cliente(cliente_id):
     conn.close()
     return redirect(url_for("listar_clientes"))
 
+
+@app.route("/pets", methods=["GET"])
+def listar_pets():
+    termo = request.args.get("q", "").strip()
+
+    conn = get_connection()
+    cursor = conn.cursor(dictionary=True)
+    if termo:
+        like = f"%{termo}%"
+        cursor.execute(
+            """SELECT pets.*, clientes.nome AS tutor_nome
+               FROM pets
+               JOIN clientes ON pets.cliente_id = clientes.id
+               WHERE pets.nome LIKE %s OR pets.especie LIKE %s OR clientes.nome LIKE %s
+               ORDER BY pets.id DESC""",
+            (like, like, like),
+        )
+    else:
+        cursor.execute("""
+            SELECT pets.*, clientes.nome AS tutor_nome
+            FROM pets
+            JOIN clientes ON pets.cliente_id = clientes.id
+            ORDER BY pets.id DESC
+        """)
+    pets = cursor.fetchall()
+
+    cursor.execute("SELECT * FROM clientes ORDER BY nome")
+    clientes = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return render_template("pets.html", pets=pets, clientes=clientes, termo=termo)
+
+
 if __name__ == "__main__":
     init_db()
     app.run(debug=True)

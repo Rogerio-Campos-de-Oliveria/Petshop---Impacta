@@ -49,6 +49,7 @@ def cadastrar_cliente():
     conn.close()
     return redirect(url_for("listar_clientes"))
 
+
 @app.route("/clientes/<int:cliente_id>/editar", methods=["GET"])
 def editar_cliente_form(cliente_id):
     conn = get_connection()
@@ -96,6 +97,7 @@ def excluir_cliente(cliente_id):
     return redirect(url_for("listar_clientes"))
 
 
+
 @app.route("/pets", methods=["GET"])
 def listar_pets():
     termo = request.args.get("q", "").strip()
@@ -126,6 +128,26 @@ def listar_pets():
     cursor.close()
     conn.close()
     return render_template("pets.html", pets=pets, clientes=clientes, termo=termo)
+
+
+@app.route("/pets/novo", methods=["POST"])
+def cadastrar_pet():
+    nome = request.form["nome"]
+    especie = request.form["especie"]
+    raca = request.form.get("raca")
+    idade = request.form.get("idade") or None
+    cliente_id = request.form["cliente_id"]
+
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute(
+        "INSERT INTO pets (nome, especie, raca, idade, cliente_id) VALUES (%s, %s, %s, %s, %s)",
+        (nome, especie, raca, idade, cliente_id),
+    )
+    conn.commit()
+    cursor.close()
+    conn.close()
+    return redirect(url_for("listar_pets"))
 
 
 if __name__ == "__main__":

@@ -37,3 +37,8 @@
 </form>
 
 <h2>Pets cadastrados</h2>
+
+<form class="barra-pesquisa" method="GET" action="{{ url_for('listar_pets') }}">
+    <input type="text" name="q" placeholder="Pesquisar por nome do pet, espécie ou tutor..." value="{{ termo or '' }}">
+    <button type="submit">Pesquisar</button>
+</form>

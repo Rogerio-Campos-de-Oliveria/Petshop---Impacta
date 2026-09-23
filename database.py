@@ -52,6 +52,15 @@ def init_db():
         ) ENGINE=InnoDB
     """)
 
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS funcionarios (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            nome VARCHAR(150) NOT NULL,
+            telefone VARCHAR(30) NOT NULL,
+            especialidade VARCHAR(150)
+        ) ENGINE=InnoDB
+    """)
+    
     conn.commit()
     cursor.close()
     conn.close()

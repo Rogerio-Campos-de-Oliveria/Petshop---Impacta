@@ -42,3 +42,27 @@
     <input type="text" name="q" placeholder="Pesquisar por nome do pet, espécie ou tutor..." value="{{ termo or '' }}">
     <button type="submit">Pesquisar</button>
 </form>
+
+{% if pets %}
+<table class="tabela">
+    <thead>
+        <tr><th>Nome</th><th>Espécie</th><th>Raça</th><th>Idade</th><th>Tutor</th></tr>
+    </thead>
+    <tbody>
+        {% for p in pets %}
+        <tr>
+            <td>{{ p.nome }}</td>
+            <td>{{ p.especie }}</td>
+            <td>{{ p.raca or "-" }}</td>
+            <td>{{ p.idade or "-" }}</td>
+            <td>{{ p.tutor_nome }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p class="vazio">
+    {% if termo %}Nenhum pet encontrado para "{{ termo }}".{% else %}Nenhum pet cadastrado ainda.{% endif %}
+</p>
+{% endif %}
+{% endblock %}

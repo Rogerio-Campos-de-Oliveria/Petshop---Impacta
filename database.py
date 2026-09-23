@@ -60,7 +60,7 @@ def init_db():
             especialidade VARCHAR(150)
         ) ENGINE=InnoDB
     """)
-    
+
     conn.commit()
     cursor.close()
     conn.close()

@@ -166,11 +166,12 @@ def listar_funcionarios():
 def cadastrar_funcionario():
     nome = request.form["nome"]
     telefone = request.form["telefone"]
+    especialidade = request.form.get("especialidade")
 
     conn = get_connection()
     cursor = conn.cursor()
     cursor.execute(
-        "INSERT INTO funcionarios (nome, telefone) VALUES (%s, %s, %s)",
+        "INSERT INTO funcionarios (nome, telefone, especialidade) VALUES (%s, %s, %s)",
         (nome, telefone, especialidade),
     )
     conn.commit()

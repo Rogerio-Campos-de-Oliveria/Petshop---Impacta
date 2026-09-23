@@ -7,7 +7,11 @@
 <div class="grade-cards">
     <a class="card" href="{{ url_for('listar_clientes') }}">
         <h2>Cadastro de Cliente</h2>
-        <p>Cadastrar os clientes (tutores dos pets).</p>
+        <p>Cadastrar, editar, excluir e pesquisar clientes (tutores dos pets).</p>
+    </a>
+    <a class="card" href="{{ url_for('listar_pets') }}">
+        <h2>Cadastro de Pet</h2>
+        <p>Cadastrar os pets e vincular a um tutor já cadastrado, com pesquisa.</p>
     </a>
 </div>
 {% endblock %}

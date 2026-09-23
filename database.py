@@ -39,6 +39,19 @@ def init_db():
             endereco VARCHAR(255)
         ) ENGINE=InnoDB
     """)
+
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS pets (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            nome VARCHAR(150) NOT NULL,
+            especie VARCHAR(80) NOT NULL,
+            raca VARCHAR(80),
+            idade INT,
+            cliente_id INT NOT NULL,
+            FOREIGN KEY (cliente_id) REFERENCES clientes(id)
+        ) ENGINE=InnoDB
+    """)
+
     conn.commit()
     cursor.close()
     conn.close()

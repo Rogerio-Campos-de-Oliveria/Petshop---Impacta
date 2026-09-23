@@ -97,7 +97,7 @@ def excluir_cliente(cliente_id):
     return redirect(url_for("listar_clientes"))
 
 
-
+# Cadastro de Pet (vinculado ao cliente)
 @app.route("/pets", methods=["GET"])
 def listar_pets():
     termo = request.args.get("q", "").strip()
@@ -148,6 +148,36 @@ def cadastrar_pet():
     cursor.close()
     conn.close()
     return redirect(url_for("listar_pets"))
+
+
+# Cadastro de Funcionário
+@app.route("/funcionarios", methods=["GET"])
+def listar_funcionarios():
+    conn = get_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM funcionarios ORDER BY id DESC")
+    funcionarios = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return render_template("funcionarios.html", funcionarios=funcionarios)
+
+
+@app.route("/funcionarios/novo", methods=["POST"])
+def cadastrar_funcionario():
+    nome = request.form["nome"]
+    telefone = request.form["telefone"]
+    especialidade = request.form.get("especialidade")
+
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute(
+        "INSERT INTO funcionarios (nome, telefone, especialidade) VALUES (%s, %s, %s)",
+        (nome, telefone, especialidade),
+    )
+    conn.commit()
+    cursor.close()
+    conn.close()
+    return redirect(url_for("listar_funcionarios"))
 
 
 if __name__ == "__main__":

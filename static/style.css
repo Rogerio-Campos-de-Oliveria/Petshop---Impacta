@@ -36,9 +36,9 @@ body {
 }
 
 nav a {
-    color: white;
+    color: rgb(255, 255, 251);
     text-decoration: none;
-    margin-left: 20px;
+    margin-left: 22px;
     font-weight: 500;
     opacity: 0.9;
 }

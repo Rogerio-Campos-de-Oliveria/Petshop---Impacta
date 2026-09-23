@@ -1,8 +1,8 @@
 :root {
     --azul-petroleo: #1f4b4a;
     --verde-agua: #2f8f88;
-    --areia: #f0eada;
-    --coral: #c45334;
+    --areia: #f6f3ec;
+    --coral: #ef7b5a;
     --texto: #1e2a2a;
     --borda: #dcded9;
 }
@@ -36,9 +36,9 @@ body {
 }
 
 nav a {
-    color: rgb(255, 255, 251);
+    color: white;
     text-decoration: none;
-    margin-left: 22px;
+    margin-left: 20px;
     font-weight: 500;
     opacity: 0.9;
 }

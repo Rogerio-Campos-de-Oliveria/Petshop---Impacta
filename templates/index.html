@@ -2,7 +2,7 @@
 {% block titulo %}Início{% endblock %}
 {% block conteudo %}
 <h1>Sistema PetCare</h1>
-<p class="subtitulo">Cadastro de Clientes.</p>
+<p class="subtitulo">Cadastro de Clientes, Pets e Funcionários.</p>
 
 <div class="grade-cards">
     <a class="card" href="{{ url_for('listar_clientes') }}">
@@ -12,6 +12,10 @@
     <a class="card" href="{{ url_for('listar_pets') }}">
         <h2>Cadastro de Pet</h2>
         <p>Cadastrar os pets e vincular a um tutor já cadastrado, com pesquisa.</p>
+    </a>
+    <a class="card" href="{{ url_for('listar_funcionarios') }}">
+        <h2>Cadastro de Funcionário</h2>
+        <p>Cadastrar os funcionários do petshop.</p>
     </a>
 </div>
 {% endblock %}

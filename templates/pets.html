@@ -46,7 +46,7 @@
 {% if pets %}
 <table class="tabela">
     <thead>
-        <tr><th>Nome</th><th>Espécie</th><th>Raça</th><th>Idade</th><th>Tutor</th></tr>
+        <tr><th>Nome</th><th>Espécie</th><th>Raça</th><th>Idade</th><th>Tutor</th><th>Ações</th></tr>
     </thead>
     <tbody>
         {% for p in pets %}
@@ -56,6 +56,13 @@
             <td>{{ p.raca or "-" }}</td>
             <td>{{ p.idade or "-" }}</td>
             <td>{{ p.tutor_nome }}</td>
+            <td class="acoes">
+                <a class="btn-editar" href="{{ url_for('editar_pet_form', pet_id=p.id) }}">Editar</a>
+                <form method="POST" action="{{ url_for('excluir_pet', pet_id=p.id) }}"
+                      onsubmit="return confirm('Tem certeza que deseja excluir este pet?');">
+                    <button type="submit" class="btn-excluir">Excluir</button>
+                </form>
+            </td>
         </tr>
         {% endfor %}
     </tbody>
@@ -66,3 +73,4 @@
 </p>
 {% endif %}
 {% endblock %}
+

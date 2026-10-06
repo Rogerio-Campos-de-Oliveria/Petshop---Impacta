@@ -1,42 +1,15 @@
 # PetCare - Sistema de Gestão para Petshop
 
-Projeto da matéria **Projeto de Software**, desenvolvido em entregas incrementais (AC1 a AC4).
+Projeto da matéria **Projeto de Software**, desenvolvido em entregas incrementais (AC1 a AC4). Este repositório reúne o resultado final, com tudo que foi desenvolvido em cada entrega.
 
-## Sobre esta entrega (AC1)
+## O que cada entrega adicionou
 
-Cadastro de Cliente (tutor), com:
-- Nome
-- Telefone
-- E-mail
-- Endereço
-
-## Tecnologias
-
-- **Front-end:** HTML + CSS (templates Jinja2)
-- **Back-end:** Python + Flask
-- **Banco de dados:** MySQL
-
-## Estrutura do projeto
-
-```
-ac1_cliente/
-├── app.py              # Rotas Flask (back-end)
-├── database.py         # Conexão e criação das tabelas no MySQL
-├── requirements.txt    # Dependências do projeto
-├── setup.bat           # Script para criar o venv e instalar as dependências
-├── templates/           # Páginas HTML (front-end)
-│   ├── base.html
-│   ├── index.html
-│   └── clientes.html
-└── static/
-    └── style.css
-```
-## Sobre esta entrega (AC2)
-
-Evolução do AC1 (cadastro de cliente), agora com:
-- **Edição** dos dados de um cliente já cadastrado
-- **Exclusão** de um cliente
-- **Pesquisa** de clientes por nome, telefone ou e-mail
+| Entrega | O que foi adicionado |
+|---|---|
+| **AC1** | Cadastro de Cliente (tutor): nome, telefone, e-mail e endereço |
+| **AC2** | Edição, exclusão e pesquisa de clientes (por nome, telefone ou e-mail) |
+| **AC3** | Cadastro de Pet, vinculado a um cliente, com edição, exclusão e pesquisa (por nome, espécie ou tutor) |
+| **AC4** | Cadastro de Funcionário do petshop |
 
 ## Tecnologias
 
@@ -47,8 +20,8 @@ Evolução do AC1 (cadastro de cliente), agora com:
 ## Estrutura do projeto
 
 ```
-ac2_cliente/
-├── app.py                    # Rotas Flask (back-end)
+petshop_completo/
+├── app.py                     # Rotas Flask (back-end)
 ├── database.py                # Conexão e criação das tabelas no MySQL
 ├── requirements.txt           # Dependências do projeto
 ├── setup.bat                  # Script de setup para Windows
@@ -56,8 +29,11 @@ ac2_cliente/
 ├── templates/
 │   ├── base.html
 │   ├── index.html
-│   ├── clientes.html          # Lista + pesquisa + cadastro
-│   └── editar_cliente.html    # Formulário de edição
+│   ├── clientes.html          # Cadastro + pesquisa de clientes (AC1/AC2)
+│   ├── editar_cliente.html    # Edição de cliente (AC2)
+│   ├── pets.html              # Cadastro + pesquisa de pets (AC3)
+│   ├── editar_pet.html        # Edição de pet (AC3)
+│   └── funcionarios.html      # Cadastro de funcionários (AC4)
 └── static/
     └── style.css
 ```
@@ -94,7 +70,11 @@ DB_CONFIG = {
 }
 ```
 
-O banco de dados `petcare` e a tabela `clientes` são criados automaticamente na primeira execução.
+> No Linux, o MySQL costuma bloquear login do `root` por senha. Nesse caso, crie um
+> usuário próprio (ex: `petcare`) e defina a variável de ambiente `DB_USER` antes
+> de rodar o programa.
+
+O banco de dados `petcare` e as tabelas `clientes`, `pets` e `funcionarios` são criadas automaticamente na primeira execução.
 
 ### 4. Rodar o programa
 
@@ -110,15 +90,23 @@ python3 app.py
 
 Acesse no navegador: **http://127.0.0.1:5000**
 
-## Funcionalidades desta entrega
+## Rotas da aplicação
 
-- `/clientes` — lista todos os clientes, com campo de pesquisa
-- `/clientes?q=termo` — filtra clientes por nome, telefone ou e-mail
-- `/clientes/novo` — cadastra um novo cliente
-- `/clientes/<id>/editar` — edita um cliente existente
-- `/clientes/<id>/excluir` — remove um cliente
+**Cliente (AC1/AC2):**
+- `/clientes` — lista com pesquisa (`?q=termo`)
+- `/clientes/novo` — cadastra
+- `/clientes/<id>/editar` — edita
+- `/clientes/<id>/excluir` — exclui
 
-## Próximas entregas (planejadas)
+**Pet (AC3):**
+- `/pets` — lista com pesquisa (`?q=termo`)
+- `/pets/novo` — cadastra, vinculado a um cliente
+- `/pets/<id>/editar` — edita
+- `/pets/<id>/excluir` — exclui
 
-- **AC3:** Cadastro do pet, vinculado ao cliente (AC1/AC2), com pesquisa
-- **AC4:** Cadastro de funcionário
+**Funcionário (AC4):**
+- `/funcionarios` — lista
+- `/funcionarios/novo` — cadastra
+
+
+

@@ -9,6 +9,7 @@ def index():
     return render_template("index.html")
 
 
+# Cadastro de Cliente
 @app.route("/clientes", methods=["GET"])
 def listar_clientes():
     termo = request.args.get("q", "").strip()
@@ -150,6 +151,56 @@ def cadastrar_pet():
     return redirect(url_for("listar_pets"))
 
 
+@app.route("/pets/<int:pet_id>/editar", methods=["GET"])
+def editar_pet_form(pet_id):
+    conn = get_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM pets WHERE id = %s", (pet_id,))
+    pet = cursor.fetchone()
+    cursor.execute("SELECT * FROM clientes ORDER BY nome")
+    clientes = cursor.fetchall()
+    cursor.close()
+    conn.close()
+
+    if pet is None:
+        return redirect(url_for("listar_pets"))
+
+    return render_template("editar_pet.html", pet=pet, clientes=clientes)
+
+
+@app.route("/pets/<int:pet_id>/editar", methods=["POST"])
+def editar_pet(pet_id):
+    nome = request.form["nome"]
+    especie = request.form["especie"]
+    raca = request.form.get("raca")
+    idade = request.form.get("idade") or None
+    cliente_id = request.form["cliente_id"]
+
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute(
+        """UPDATE pets
+           SET nome = %s, especie = %s, raca = %s, idade = %s, cliente_id = %s
+           WHERE id = %s""",
+        (nome, especie, raca, idade, cliente_id, pet_id),
+    )
+    conn.commit()
+    cursor.close()
+    conn.close()
+    return redirect(url_for("listar_pets"))
+
+
+@app.route("/pets/<int:pet_id>/excluir", methods=["POST"])
+def excluir_pet(pet_id):
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute("DELETE FROM pets WHERE id = %s", (pet_id,))
+    conn.commit()
+    cursor.close()
+    conn.close()
+    return redirect(url_for("listar_pets"))
+
+
 # Cadastro de Funcionário
 @app.route("/funcionarios", methods=["GET"])
 def listar_funcionarios():
@@ -183,3 +234,4 @@ def cadastrar_funcionario():
 if __name__ == "__main__":
     init_db()
     app.run(debug=True)
+
